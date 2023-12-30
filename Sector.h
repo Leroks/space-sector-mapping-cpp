@@ -20,10 +20,12 @@ public:
     bool color; // Node color for Red-Black Tree
 
     // Overloaded operators
+    bool operator<(const Sector& other) const;
+    static std::string stringCheck(int num, std::string str1, std::string str2, std::string str3);
     Sector& operator=(const Sector& other);
     bool operator==(const Sector& other) const;
     bool operator!=(const Sector& other) const;
-    
+
 };
 
 #endif // SECTOR_H

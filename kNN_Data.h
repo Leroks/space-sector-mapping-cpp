@@ -26,7 +26,7 @@ struct Dataset {
     Dataset() {};
 
     // Parameterized constructor
-    Dataset(const std::vector<Point>& p, const std::vector<std::string>& h) : points(p), header(h) {}  
+    Dataset(const std::vector<Point>& p, const std::vector<std::string>& h) : points(p), header(h) {}
 
 
 };

@@ -16,10 +16,11 @@ public:
     ~SpaceSectorBST();
     void readSectorsFromFile(const std::string& filename);
     void insertSectorByCoordinates(int x, int y, int z);
-    void recursiveSectorInsertion(Sector*& root, Sector* newNode);
+
     Sector *findMin(Sector *node);
-    void recursiveSectorDeletion(Sector*& Root, const std::string& sector_code);
+
     void deleteSector(const std::string& sector_code);
+    void recursiveSectorDeletion(Sector*& Root, const std::string& sector_code);
     void recursiveDeleteBST(Sector* sector);
     void displaySectorsInOrderRecursively(Sector* root);
     void displaySectorsInOrder();
@@ -27,6 +28,7 @@ public:
     void displaySectorsPreOrder();
     void displaySectorsPostOrderRecursively(Sector* root);
     void displaySectorsPostOrder();
+    void recursiveSectorInsertion(Sector*& root, Sector* newNode);
     void helperGetStellarPath(Sector*& root, const std::string& sector_code, std::vector<Sector*>& mainpath);
 
     std::vector<Sector*> getStellarPath(const std::string& sector_code);

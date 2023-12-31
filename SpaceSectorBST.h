@@ -17,6 +17,7 @@ public:
     void readSectorsFromFile(const std::string& filename);
     void insertSectorByCoordinates(int x, int y, int z);
     void recursiveSectorInsertion(Sector*& root, Sector* newNode);
+    Sector *findMin(Sector *node);
     void recursiveSectorDeletion(Sector*& Root, const std::string& sector_code);
     void deleteSector(const std::string& sector_code);
     void recursiveDeleteBST(Sector* sector);
@@ -30,6 +31,8 @@ public:
 
     std::vector<Sector*> getStellarPath(const std::string& sector_code);
     void printStellarPath(const std::vector<Sector*>& path);
+
+
 };
 
 #endif // SPACESECTORBST_H

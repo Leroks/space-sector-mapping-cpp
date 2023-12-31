@@ -54,6 +54,49 @@ void SpaceSectorBST::readSectorsFromFile(const std::string &filename) {
     file.close();
 }
 
+
+void SpaceSectorBST::recursiveSectorDeletion(Sector *&Root, const std::string &sector_code) {
+    if (Root == nullptr) {
+        return;
+    }
+
+    if (Root->sector_code == sector_code) {
+        if (Root->left == nullptr && Root->right == nullptr) {
+            delete Root;
+            Root = nullptr;
+        } else if (Root->left == nullptr) {
+            Sector *temp = Root;
+            Root = Root->right;
+            Root->parent = temp->parent;
+            delete temp;
+        } else if (Root->right == nullptr) {
+            Sector *temp = Root;
+            Root = Root->left;
+            Root->parent = temp->parent;
+            delete temp;
+        } else {
+            Sector *temp = findMin(Root->right);
+            Root->sector_code = temp->sector_code;
+            Root->x = temp->x;
+            Root->y = temp->y;
+            Root->z = temp->z;
+            Root->distance_from_earth = temp->distance_from_earth;
+            recursiveSectorDeletion(Root->right, temp->sector_code);
+        }
+    } else {
+        recursiveSectorDeletion(Root->left, sector_code);
+        recursiveSectorDeletion(Root->right, sector_code);
+    }
+}
+
+Sector* SpaceSectorBST::findMin(Sector *node) {
+    while (node->left != nullptr) {
+        node = node->left;
+    }
+    return node;
+}
+
+
 void SpaceSectorBST::insertSectorByCoordinates(int x, int y, int z) {
     // Instantiate and insert a new sector into the space sector BST map according to the
     // coordinates-based comparison criteria.
@@ -62,47 +105,6 @@ void SpaceSectorBST::insertSectorByCoordinates(int x, int y, int z) {
         return;
     }
     recursiveSectorInsertion(root, newNode);
-}
-
-void SpaceSectorBST::recursiveSectorDeletion(Sector *&Root, const std::string &sector_code) {
-    if (Root == nullptr) {
-        return;
-    }
-    if (Root->sector_code == sector_code) {
-        if (Root->left == nullptr && Root->right == nullptr) {
-            delete Root;
-            Root = nullptr;
-            return;
-        } else if (Root->left == nullptr) {
-            Sector *temp = Root;
-            Root = Root->right;
-            Root->parent = temp->parent;
-            delete temp;
-            return;
-        } else if (Root->right == nullptr) {
-            Sector *temp = Root;
-            Root = Root->left;
-            Root->parent = temp->parent;
-            delete temp;
-            return;
-        } else {
-            Sector *temp = Root->right;
-            while (temp->left != nullptr) {
-                temp = temp->left;
-            }
-            Root->sector_code = temp->sector_code;
-            Root->x = temp->x;
-            Root->y = temp->y;
-            Root->z = temp->z;
-            Root->distance_from_earth = temp->distance_from_earth;
-            recursiveSectorDeletion(Root->right, temp->sector_code);
-            return;
-        }
-    } else {
-        recursiveSectorDeletion(Root->left, sector_code);
-        recursiveSectorDeletion(Root->right, sector_code);
-    }
-
 }
 
 void SpaceSectorBST::deleteSector(const std::string &sector_code) {

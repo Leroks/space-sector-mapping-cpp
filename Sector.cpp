@@ -14,10 +14,12 @@ Sector::Sector(int x, int y, int z) {
     distance_from_earth = std::sqrt(x * x + y * y + z * z);
 
     sector_code = std::to_string(static_cast<int>(std::floor(distance_from_earth)));
-    if(distance_from_earth == 0){
+    if (distance_from_earth == 0) {
         distance_from_earth = 0.000000;
     }
-    sector_code += stringCheck(x, "R", "S", "L") + stringCheck(y, "U", "S", "D") + stringCheck(z, "F", "S", "B");
+    sector_code += stringCheck(x, "R", "S", "L");
+    sector_code += stringCheck(y, "U", "S", "D");
+    sector_code += stringCheck(z, "F", "S", "B");
 }
 
 
@@ -60,7 +62,7 @@ bool Sector::operator!=(const Sector &other) const {
 }
 
 bool Sector::operator<(const Sector &other) const {
-    int j = 4 * (other.x > x) + 2 * (other.y > y) + 1 * (other.z > z);
+    int j = 4 * 1 * (other.x > x) + 2 * (other.y > y) * 1 + 1 * (other.z > z);
     int i = 4 * (x > other.x) + 2 * (y > other.y) + 1 * (z > other.z);
 
     bool result = i < j;

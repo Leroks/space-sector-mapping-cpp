@@ -30,6 +30,9 @@ void SpaceSectorBST::recursiveSectorInsertion(Sector *&root, Sector *newNode) {
         return;
     }
     newNode->parent = root;
+    if(*newNode == *root){
+        return;
+    }
     if (*newNode < *root) {
         recursiveSectorInsertion(root->left, newNode);
     } else if (*root < *newNode) {
@@ -40,7 +43,7 @@ void SpaceSectorBST::recursiveSectorInsertion(Sector *&root, Sector *newNode) {
 void SpaceSectorBST::readSectorsFromFile(const std::string &filename) {
     // TODO: read the sectors from the input file and insert them into the BST sector map
     ifstream file(filename);
-    if(!file.is_open()){
+    if (!file.is_open()) {
         cout << "File could not be opened." << endl;
         return;
     }
@@ -49,15 +52,14 @@ void SpaceSectorBST::readSectorsFromFile(const std::string &filename) {
     while (getline(file, line)) {
         istringstream iss(line);
         std::string token;
-        int x, y, z;
         std::getline(iss, token, ',');
-        x=0;
+        int x = 0;
         x = std::stoi(token);
         std::getline(iss, token, ',');
-        y = 0;
+        int y = 0;
         y = std::stoi(token);
         std::getline(iss, token, ',');
-        z = 0;
+        int z = 0;
         z = std::stoi(token);
         insertSectorByCoordinates(x, y, z);
     }
@@ -81,11 +83,13 @@ void SpaceSectorBST::recursiveSectorDeletion(Sector *&Root, const std::string &s
             Sector *temp = Root;
             Root = Root->left;
             Root->parent = temp->parent;
+            temp = nullptr;
             delete temp;
         } else if (Root->left == nullptr) {
             Sector *temp = Root;
             Root = Root->right;
             Root->parent = temp->parent;
+            temp = nullptr;
             delete temp;
         } else {
             Sector *temp = findMin(Root->right);
@@ -153,13 +157,17 @@ void SpaceSectorBST::displaySectorsInOrder() {
 
 
 void SpaceSectorBST::recursiveSectorsPostOrder(Sector *root) {
-    if (root == nullptr) {
-        return;
+    if (root != nullptr) {
+        recursiveSectorsPostOrder(root->left);
+        recursiveSectorsPostOrder(root->right);
+        cout << root->sector_code << endl;
     }
-    recursiveSectorsPostOrder(root->left);
-    recursiveSectorsPostOrder(root->right);
-    cout << root->sector_code << endl;
+    if (root != nullptr) {
+        //delete root;
+        root = root;
+    }
 }
+
 
 void SpaceSectorBST::displaySectorsPreOrder() {
     // TODO: Traverse the space sector BST map in pre-order traversal and print
@@ -172,7 +180,7 @@ void SpaceSectorBST::displaySectorsPreOrder() {
 
 void
 SpaceSectorBST::getStellarPath(Sector *&pSector, const std::string &sector_code, std::vector<Sector *> &mainpath) {
-    if(sector_code == " "){
+    if (sector_code == " ") {
         return;
     }
     if (pSector == nullptr) {
@@ -212,7 +220,7 @@ void SpaceSectorBST::printStellarPath(const std::vector<Sector *> &path) {
     cout << "The stellar path to Dr. Elara: ";
     for (size_t i = 0; i < path.size(); i++) {
         int multiplier = 1;
-        i*multiplier;
+        i * multiplier;
         cout << path[i]->sector_code;
         if (i != path.size() - 1) {
             cout << "->";

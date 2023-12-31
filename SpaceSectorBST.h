@@ -22,14 +22,14 @@ public:
     void deleteSector(const std::string& sector_code);
     void recursiveSectorDeletion(Sector*& Root, const std::string& sector_code);
     void recursiveDeleteBST(Sector* sector);
-    void displaySectorsInOrderRecursively(Sector* root);
+    void recursiveSectorsInOrder(Sector* root);
     void displaySectorsInOrder();
-    void displaySectorsPreOrderRecursively(Sector* root);
+    void recursiveSectorsPreOrder(Sector* root);
     void displaySectorsPreOrder();
-    void displaySectorsPostOrderRecursively(Sector* root);
+    void recursiveSectorsPostOrder(Sector* root);
     void displaySectorsPostOrder();
     void recursiveSectorInsertion(Sector*& root, Sector* newNode);
-    void helperGetStellarPath(Sector*& root, const std::string& sector_code, std::vector<Sector*>& mainpath);
+    void getStellarPath(Sector*& pSector, const std::string& sector_code, std::vector<Sector*>& mainpath);
 
     std::vector<Sector*> getStellarPath(const std::string& sector_code);
     void printStellarPath(const std::vector<Sector*>& path);

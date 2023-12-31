@@ -8,7 +8,7 @@
 // Base Node Class
 class KDTreeNode {
 public:
-    virtual ~KDTreeNode()  {}; // virtual destructor
+    virtual ~KDTreeNode() {}; // virtual destructor
     virtual bool isLeaf() const = 0; // returns if the node is a leaf node or not
 
 };
@@ -17,12 +17,16 @@ class kd_tree_inter_node : public KDTreeNode {
 public:
     int split_dimension;
     double split_value;
-    KDTreeNode* left;
-    KDTreeNode* right;
+    KDTreeNode *left;
+    KDTreeNode *right;
 
     // Constructor declaration etc
-    kd_tree_inter_node(int split_dimension, double split_value)
-            : split_dimension(split_dimension), split_value(split_value), left(nullptr), right(nullptr) {}
+    kd_tree_inter_node(int split_dimension, double split_value) {
+        this->split_dimension = split_dimension;
+        this->split_value = split_value;
+        this->left = nullptr;
+        this->right = nullptr;
+    }
 
     bool isLeaf() const override {
         return false;

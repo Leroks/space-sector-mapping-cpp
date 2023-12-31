@@ -2,13 +2,21 @@
 #include "Sector.h"
 
 // Constructor implementation
-Sector::Sector(int x, int y, int z)
-        : x(x), y(y), z(z), left(nullptr), right(nullptr), parent(nullptr), color(RED) {
-    // Calculate the distance to the Earth
+Sector::Sector(int x, int y, int z) {
+    this->x = x;
+    this->y = y;
+    this->z = z;
+    this->left = nullptr;
+    this->right = nullptr;
+    this->parent = nullptr;
+    this->color = RED;
+
     distance_from_earth = std::sqrt(x * x + y * y + z * z);
 
-    // Generate the sector code
     sector_code = std::to_string(static_cast<int>(std::floor(distance_from_earth)));
+    if(distance_from_earth == 0){
+        distance_from_earth = 0.000000;
+    }
     sector_code += stringCheck(x, "R", "S", "L") + stringCheck(y, "U", "S", "D") + stringCheck(z, "F", "S", "B");
 }
 

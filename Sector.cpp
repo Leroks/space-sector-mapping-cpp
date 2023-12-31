@@ -42,12 +42,6 @@ Sector &Sector::operator=(const Sector &other) {
     return *this;
 }
 
-bool Sector::operator<(const Sector &other) const {
-    int num = 4 * (x > other.x) + 2 * (y > other.y) + 1 * (z > other.z);
-    int num2 = 4 * (other.x > x) + 2 * (other.y > y) + 1 * (other.z > z);
-    return num < num2;
-}
-
 
 bool Sector::operator==(const Sector &other) const {
     return (x == other.x && y == other.y && z == other.z);
@@ -55,4 +49,13 @@ bool Sector::operator==(const Sector &other) const {
 
 bool Sector::operator!=(const Sector &other) const {
     return !(*this == other);
+}
+
+bool Sector::operator<(const Sector &other) const {
+    int j = 4 * (other.x > x) + 2 * (other.y > y) + 1 * (other.z > z);
+    int i = 4 * (x > other.x) + 2 * (y > other.y) + 1 * (z > other.z);
+
+    bool result = i < j;
+
+    return result;
 }

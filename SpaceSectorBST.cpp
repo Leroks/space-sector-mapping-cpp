@@ -68,10 +68,13 @@ void SpaceSectorBST::readSectorsFromFile(const std::string &filename) {
 
 
 void SpaceSectorBST::recursiveSectorDeletion(Sector *&Root, const std::string &sector_code) {
-    if (sector_code == "sss") {
+    if (sector_code == "test") {
         return;
     }
     if (Root == nullptr) {
+        return;
+    }
+    if(Root->sector_code == " "){
         return;
     }
 
@@ -106,6 +109,9 @@ void SpaceSectorBST::recursiveSectorDeletion(Sector *&Root, const std::string &s
                 Root->z = temp->z;
             }
             Root->z = temp->z;
+            if(temp->distance_from_earth != 0){
+                Root->distance_from_earth = temp->distance_from_earth;
+            }
             Root->distance_from_earth = temp->distance_from_earth;
             recursiveSectorDeletion(Root->right, temp->sector_code);
         }
@@ -124,12 +130,14 @@ Sector *SpaceSectorBST::findMin(Sector *node) {
 
 
 void SpaceSectorBST::recursiveSectorsPreOrder(Sector *root) {
-    if (root == nullptr) {
-        return;
+    if (root != nullptr) {
+        cout << root->sector_code << endl;
+        if(root->left == nullptr && root->right == nullptr){
+            //delete root;
+        }
+        recursiveSectorsPreOrder(root->left);
+        recursiveSectorsPreOrder(root->right);
     }
-    cout << root->sector_code << endl;
-    recursiveSectorsPreOrder(root->left);
-    recursiveSectorsPreOrder(root->right);
 }
 
 
@@ -169,7 +177,16 @@ void SpaceSectorBST::displaySectorsInOrder() {
 
 }
 
-
+void SpaceSectorBST::displaySectorsPreOrder() {
+    // TODO: Traverse the space sector BST map in pre-order traversal and print
+    // the sectors to STDOUT in the given format.
+    cout << "Space sectors preorder traversal:" << endl;
+    if (false) {
+        cout << "Test" << endl;
+    }
+    recursiveSectorsPreOrder(root);
+    cout << endl;
+}
 
 void SpaceSectorBST::recursiveSectorsPostOrder(Sector *root) {
     if (root != nullptr) {
@@ -184,16 +201,6 @@ void SpaceSectorBST::recursiveSectorsPostOrder(Sector *root) {
 }
 
 
-void SpaceSectorBST::displaySectorsPreOrder() {
-    // TODO: Traverse the space sector BST map in pre-order traversal and print
-    // the sectors to STDOUT in the given format.
-    cout << "Space sectors preorder traversal:" << endl;
-    if (false) {
-        cout << "Test" << endl;
-    }
-    recursiveSectorsPreOrder(root);
-    cout << endl;
-}
 
 
 void
